@@ -71,6 +71,15 @@ h3{margin:0 0 8px;font-size:18px}
 .daybar input{accent-color:var(--green);flex:none}
 .daytext{flex:1}.daytext b{display:block;font-size:12px}.daytext span{font-size:11px;color:var(--muted)}
 .daybar .weight{font-size:9px}
+.day-content{padding:0 12px 12px 42px}
+.tasklist{display:grid;gap:6px;margin-top:2px}
+.task{display:flex;gap:9px;align-items:flex-start;padding:8px 9px;border:1px solid #edf0f5;background:#fff;border-radius:9px}
+.task input{accent-color:var(--green);margin-top:2px;flex:none}
+.task span{font-size:11px;line-height:1.45;color:var(--text)}
+.task.done span{text-decoration:line-through;color:var(--muted)}
+.task-label{font-size:10px!important;font-weight:800;color:var(--accent)!important;display:block;margin-bottom:2px}
+.day-meta{font-size:10px;color:var(--muted);margin-top:7px}
+.week summary{cursor:pointer}
 .controls{display:flex;gap:8px;flex-wrap:wrap}
 .btn{border:1px solid var(--line);background:#fff;color:var(--text);padding:10px 13px;border-radius:10px;font-weight:750;font-size:13px}
 .btn:hover{border-color:#cdd3df;background:#f7f8fb}
@@ -114,7 +123,7 @@ textarea:focus{border-color:#b9b0ff;box-shadow:0 0 0 3px var(--accent-soft)}
   <div class="grid stats">
     <div class="card stat"><div class="label">Overall progress</div><div class="value" id="overallPct">0%</div><small>All four papers</small></div>
     <div class="card stat"><div class="label">Modules done</div><div class="value" id="doneCount">0/22</div><small>Weighted by syllabus marks</small></div>
-    <div class="card stat"><div class="label">Study days done</div><div class="value" id="daysDone">0</div><small>From 26 Sep → 12 Dec</small></div>
+    <div class="card stat"><div class="label">Study days done</div><div class="value" id="daysDone">0</div><small>From 27 Sep → 12 Dec</small></div>
     <div class="card stat"><div class="label">Days left</div><div class="value" id="daysLeft">—</div><small>Until 13 Dec</small></div>
   </div>
   <div class="card" style="margin-top:16px">
@@ -131,7 +140,7 @@ textarea:focus{border-color:#b9b0ff;box-shadow:0 0 0 3px var(--accent-soft)}
 <section id="schedule">
   <div class="section-title"><div><h2>Preparation roadmap</h2><div class="empty">The plan gives you three jobs: finish the syllabus, revise it, then test it.</div></div></div>
   <div class="grid schedule">
-    <div class="card phase"><h3>Phase 1 — Build the base</h3><b>26 Sep → 25 Oct</b><p>Complete the first pass through the high-weight chapters. Learn concepts and immediately solve basic questions.</p><ul><li>2 study blocks/day</li><li>Prioritise 20–30% modules</li><li>Make a formula/section notebook</li></ul></div>
+    <div class="card phase"><h3>Phase 1 — Build the base</h3><b>27 Sep → 25 Oct</b><p>Complete the first pass through the high-weight chapters. Learn concepts and immediately solve basic questions.</p><ul><li>2 study blocks/day</li><li>Prioritise 20–30% modules</li><li>Make a formula/section notebook</li></ul></div>
     <div class="card phase orange"><h3>Phase 2 — Finish + revise</h3><b>26 Oct → 22 Nov</b><p>Finish every remaining module, then start active recall and mixed question practice.</p><ul><li>3 focused blocks/day where possible</li><li>Daily 20–30 min revision</li><li>Weekly mini-test</li></ul></div>
     <div class="card phase green"><h3>Phase 3 — Exam mode</h3><b>23 Nov → 12 Dec</b><p>No new rabbit holes. Rotate papers, solve timed mocks, analyse mistakes and revise weak modules.</p><ul><li>Timed 60-minute practice</li><li>Past/mock questions</li><li>Final 3-day light revision</li></ul></div>
   </div>
@@ -193,16 +202,108 @@ const DATA = [
   ["Accounting Fundamentals",30],["Accounting for Special Transactions",15],["Preparation of Final Accounts",25],["Fundamentals of Cost Accounting",30]
  ]},
  {code:"PAPER 3",name:"Business Mathematics & Statistics",modules:[
-  ["Arithmetic",20],["Algebra",15],["Calculus — Application in Business",5],["Statistical Representation of Data",15],
-  ["Measures of Central Tendency & Dispersion",15],["Correlation & Regression",15],["Probability",10],["Index Numbers & Time Series",5]
+  ["Arithmetic",15],["Algebra",20],["Calculus — Application in Business",5],["Statistical Representation of Data",5],
+  ["Measures of Central Tendency & Dispersion",15],["Correlation & Regression",15],["Probability",15],["Index Numbers & Time Series",10]
  ]},
  {code:"PAPER 4",name:"Business Economics & Management",modules:[
   ["Basic Concepts",15],["Forms of Market",20],["Money & Banking",20],["Economic & Business Environment",15],["Fundamentals of Management",30]
  ]}
 ];
 
+// Granular day-by-day plan. Every syllabus subtopic is introduced here before the revision phase.
+const PLAN = [
+["2026-09-27",["P1 • Sources of Law","P1 • Legislative Process in India","P2 • Four accounting frameworks: conceptual, legal, institutional & regulatory","P3 • Ratios: basic concepts and simplification"]],
+["2026-09-28",["P1 • Court System in India","P1 • Introduction: basic legal concepts and terminology","P2 • Forms of organisation","P3 • Proportion and direct/inverse variation"]],
+["2026-09-29",["P2 • Accounting principles, concepts & conventions","P2 • Capital vs revenue expenditure","P4 • Fundamentals of economics: scarcity, choice and basic concepts","P3 • Simple interest"]],
+["2026-09-30",["P2 • Capital vs revenue receipts","P2 • Accounting cycle overview","P4 • Utility, wealth and production","P3 • Compound interest"]],
+["2026-10-01",["P2 • Charts of accounts & codification structure","P2 • Analysis of transactions using accounting equation","P3 • Annuity and time value of money","P4 • Demand: meaning, determinants and law of demand"]],
+["2026-10-02",["P1 • Essentials of a contract","P1 • Offer: meaning, essentials and types","P2 • Double-entry system","P4 • Elasticity of demand: price, income and cross elasticity"]],
+["2026-10-03",["P1 • Acceptance: rules and communication/revocation","P1 • Consideration: meaning, essentials and exceptions","P2 • Books of original entry and subsidiary books","P3 • Arithmetic progression"]],
+
+["2026-10-04",["P2 • Journal proper: opening, transfer, closing, adjustment & rectification entries","P2 • Ledger","P3 • Geometric progression","P4 • Consumer behaviour"]],
+["2026-10-05",["P1 • Capacity of parties: minor, sound mind and disqualified persons","P1 • Free consent: coercion and undue influence","P2 • Cash book and bank book","P3 • Time and distance"]],
+["2026-10-06",["P1 • Free consent: fraud, misrepresentation and mistake","P1 • Legality of object and consideration","P2 • Petty cash book","P4 • Demand forecasting"]],
+["2026-10-07",["P1 • Void agreements and agreements expressly declared void","P1 • Contingent contracts","P2 • Bank Reconciliation Statement","P3 • Set theory and Venn diagrams"]],
+["2026-10-08",["P1 • Performance of contract","P1 • Discharge of contracts","P2 • Trial balance","P3 • Indices and basic laws of indices"]],
+["2026-10-09",["P1 • Quasi contracts","P1 • Breach of contract and remedies","P2 • Adjustment entries","P3 • Logarithms: basic concepts and laws"]],
+["2026-10-10",["P1 • Special contracts: indemnity and guarantee","P1 • Special contracts: bailment and pledge","P2 • Rectification of errors","P4 • Supply: meaning, determinants and law of supply"]],
+
+["2026-10-11",["P1 • Special contracts: agency","P1 • E-contracts and e-signatures: essentials/requirements","P2 • Depreciation: Straight Line Method","P3 • Permutation and combination: basic applications"]],
+["2026-10-12",["P1 • Offer/acceptance and e-contract recap through examples","P2 • Depreciation: Diminishing Balance Method","P2 • Accounting treatment of bad debts","P4 • Elasticity of supply"]],
+["2026-10-13",["P2 • Provision for doubtful debts","P2 • Accounting Fundamentals mixed problems","P3 • Quadratic equations: basic methods","P4 • Market equilibrium: equilibrium price and quantity"]],
+["2026-10-14",["P3 • Calculus: concept of derivative in business","P3 • Revenue function","P4 • Theory of production: meaning and factors of production","P1 • Contract law: essentials, offer, acceptance and consideration revision"]],
+["2026-10-15",["P3 • Cost function","P3 • Optimization techniques: basic business applications","P4 • Law of variable proportions","P2 • Journal, ledger and trial balance practice"]],
+["2026-10-16",["P4 • Returns to scale","P4 • Cost of production: total, fixed, variable, average and marginal costs","P1 • Contract law: capacity, free consent and legality","P2 • Depreciation and bad debts practice"]],
+["2026-10-17",["P4 • Means of production","P1 • Contract law: performance, discharge, quasi contracts and contingent contracts","P2 • Full Accounting Fundamentals chapter test","P3 • Arithmetic + Algebra mixed practice"]],
+
+["2026-10-18",["P1 • Sale of Goods Act: definitions and key terms","P1 • Contract of sale: sale vs agreement to sell","P2 • Consignment: meaning, features and accounting treatment","P3 • Statistical diagrams: bar/column and other diagrammatic representation"]],
+["2026-10-19",["P1 • Conditions and warranties: meaning and distinction","P1 • Implied conditions and warranties","P2 • Consignment: valuation of stock, normal/abnormal loss and profit/loss","P3 • Frequency distribution"]],
+["2026-10-20",["P1 • Transfer of ownership/property in goods","P1 • Rules for transfer of title","P2 • Joint Venture: meaning and accounting methods","P3 • Histogram"]],
+["2026-10-21",["P1 • Performance of contract: delivery of goods","P1 • Rules relating to delivery and acceptance","P2 • Joint Venture: profit/loss and transactions between co-venturers","P3 • Frequency polygon and frequency curve"]],
+["2026-10-22",["P1 • Rights of unpaid seller: lien","P1 • Rights of unpaid seller: stoppage in transit","P2 • Bills of Exchange: terminology and accounting entries","P3 • Ogive"]],
+["2026-10-23",["P1 • Rights of unpaid seller: resale and related rights","P1 • Sale of Goods Act full problem/section practice","P2 • Bills of Exchange: dishonour, noting and renewal basics","P3 • Pie chart"]],
+["2026-10-24",["P1 • Sale of Goods Act mixed revision","P2 • Special Transactions mixed practice: consignment + joint venture","P3 • Statistical representation mixed practice","P4 • Perfect competition: features and price determination"]],
+
+["2026-10-25",["P1 • Negotiable Instruments: meaning and characteristics","P1 • Promissory note, bill of exchange and cheque: definitions","P2 • Preparation of sole proprietor final accounts: overview","P4 • Perfect competition: equilibrium and short-run/long-run ideas"]],
+["2026-10-26",["P1 • Promissory note vs bill of exchange vs cheque","P1 • Crossing of cheques","P2 • Income Statement: trading and profit & loss components","P3 • Mean: individual, discrete and continuous series"]],
+["2026-10-27",["P1 • Marking of cheques","P1 • Noting and protesting","P2 • Balance Sheet of sole proprietorship","P3 • Weighted mean and combined mean basics"]],
+["2026-10-28",["P1 • Dishonour of cheques and relevant consequences","P1 • Negotiable Instruments mixed practice","P2 • Adjustments in final accounts","P3 • Median"]],
+["2026-10-29",["P2 • Not-for-Profit Organisation: Receipts & Payments Account","P2 • NPO: Income & Expenditure Account","P3 • Mode","P4 • Duopoly"]],
+["2026-10-30",["P2 • NPO: Balance Sheet","P2 • NPO adjustments and treatment of special items","P3 • Mean deviation","P4 • Oligopoly"]],
+["2026-10-31",["P2 • Final Accounts mixed practice: sole proprietor","P2 • Final Accounts mixed practice: NPO","P3 • Range, quartiles and quartile deviation","P4 • Monopoly"]],
+
+["2026-11-01",["P1 • Business Communication: meaning, nature and scope","P1 • Features of effective communication","P2 • Final Accounts chapter test","P3 • Standard deviation"]],
+["2026-11-02",["P1 • Communication process and elements","P1 • Types of business communication","P2 • Cost accounting: meaning, definition and significance","P3 • Coefficient of variation"]],
+["2026-11-03",["P1 • Internal-based business communication","P1 • Do's and don'ts of business communication","P2 • Relationship between Cost Accounting and Financial Accounting","P3 • Karl Pearson's coefficient of skewness"]],
+["2026-11-04",["P1 • Writing/drafting for business audiences","P1 • Clarity, conciseness, tone and audience awareness","P2 • Application of Cost Accounting for business decisions","P3 • Bowley's coefficient of skewness"]],
+["2026-11-05",["P1 • Intercultural and international communication","P1 • Barriers to communication","P2 • Cost, cost centre, cost unit and cost drivers","P3 • Measures of Central Tendency & Dispersion mixed problems"]],
+["2026-11-06",["P1 • Legal aspects of business communication","P1 • Use of graphics and references in business communication","P2 • Classification of costs with reference to Cost Accounting Standard 1","P3 • Correlation: meaning and scatter diagram"]],
+["2026-11-07",["P1 • Business Communication complete module practice","P2 • Ascertainment of costs","P2 • Statement of Cost and Profit / Cost Sheet","P3 • Karl Pearson's coefficient of correlation"]],
+
+["2026-11-08",["P3 • Regression analysis: meaning and basics","P3 • Regression equations and interpretation","P4 • Monopolistic competition","P4 • Price discrimination"]],
+["2026-11-09",["P4 • Money: meaning, types, features and functions","P4 • Banking: definition, functions and utility","P3 • Correlation and regression mixed practice","P1 • Business Law complete Module 1 revision"]],
+["2026-11-10",["P4 • Principles of banking","P4 • Commercial banks and central bank","P3 • Probability: concepts and terminology","P1 • Contract Act: special contracts and e-contracts revision"]],
+["2026-11-11",["P4 • Measures of credit control","P4 • Money market","P3 • Probability: primary applications of probability theorems","P2 • Cost Accounting mixed problems"]],
+["2026-11-12",["P4 • PESTEL: Political and Economic factors","P4 • PESTEL: Social and Technological factors","P3 • Index numbers: uses and methods of construction","P1 • Sale of Goods Act complete revision"]],
+["2026-11-13",["P4 • PESTEL: Environmental and Legal factors","P4 • VUCAFI: Volatility, Uncertainty, Complexity and Ambiguity","P3 • Time series: components","P1 • Negotiable Instruments Act complete revision"]],
+["2026-11-14",["P4 • VUCAFI: Fear of Unknown and Unprecedentedness","P4 • Economic and Business Environment mixed practice","P3 • Trend by moving average method","P2 • Financial Accounting mixed revision"]],
+
+["2026-11-15",["P4 • Management: introduction and scope","P4 • Stewardship Theory","P4 • Agency Theory","P1 • Business Communication full revision"]],
+["2026-11-16",["P4 • Planning","P4 • Organizing","P4 • Staffing","P2 • Accounting Fundamentals full revision"]],
+["2026-11-17",["P4 • Leading","P4 • Communication, coordination and collaboration in management","P3 • Probability + Index Numbers + Time Series revision","P1 • Contract Act problem/section practice"]],
+["2026-11-18",["P4 • Monitoring and control","P4 • Organisation structure","P4 • Responsibility and accountability","P2 • Special Transactions revision"]],
+["2026-11-19",["P4 • Delegation","P4 • Leadership: concepts and theories","P4 • Motivation: concepts and theories","P3 • Statistics representation + central tendency revision"]],
+["2026-11-20",["P4 • Decision-making: types and process","P4 • Management mixed case questions","P3 • Correlation + regression revision","P2 • Final Accounts revision"]],
+["2026-11-21",["P1 • Full Paper 1 syllabus consolidation","P2 • Full Paper 2 syllabus consolidation","P3 • Full Paper 3 syllabus consolidation","P4 • Full Paper 4 syllabus consolidation"]],
+
+["2026-11-22",["REVISION • Paper 1 Module 1 + Contract Act","PRACTICE • Paper 1 objective/short questions","ERROR LOG • Mark weak legal provisions"]],
+["2026-11-23",["REVISION • Paper 2 Accounting Fundamentals","PRACTICE • Journal, ledger, BRS, trial balance, depreciation","ERROR LOG • Accounting mistakes"]],
+["2026-11-24",["REVISION • Paper 3 Arithmetic + Algebra + Calculus","PRACTICE • Timed mathematics set","ERROR LOG • Formula/calculation mistakes"]],
+["2026-11-25",["REVISION • Paper 4 Basic Concepts + Forms of Market","PRACTICE • Economics MCQs and short answers","ERROR LOG • Definitions/graphs/concepts"]],
+["2026-11-26",["REVISION • Paper 1 Sale of Goods + Negotiable Instruments","PRACTICE • Case-based law questions","ERROR LOG • Sections and distinctions"]],
+["2026-11-27",["REVISION • Paper 2 Special Transactions + Final Accounts","PRACTICE • Consignment, JV, bills and final accounts","ERROR LOG • Accounting adjustments"]],
+["2026-11-28",["REVISION • Paper 3 Statistics","PRACTICE • Mean/median/mode, dispersion, correlation/regression","ERROR LOG • Formula and interpretation mistakes"]],
+
+["2026-11-29",["REVISION • Paper 4 Money & Banking + Economic Environment","PRACTICE • PESTEL, VUCAFI and banking questions","ERROR LOG • Economics weak areas"]],
+["2026-11-30",["REVISION • Paper 1 Business Communication","PRACTICE • Drafting, barriers, intercultural/legal communication","TIMED SET • 60-minute Paper 1 section mix"]],
+["2026-12-01",["REVISION • Paper 2 Cost Accounting","PRACTICE • Cost classification, cost sheet and decisions","TIMED SET • 60-minute Paper 2 section mix"]],
+["2026-12-02",["REVISION • Paper 3 Probability + Index Numbers + Time Series","PRACTICE • Full Statistics mixed set","TIMED SET • 60-minute Paper 3 section mix"]],
+["2026-12-03",["REVISION • Paper 4 Management","PRACTICE • Theories, functions, leadership, motivation and decision-making","TIMED SET • 60-minute Paper 4 section mix"]],
+["2026-12-04",["MOCK • Paper 1 full 100-mark / 60-minute simulation","REVIEW • Check every wrong answer","REVISE • Weakest Paper 1 topics"]],
+["2026-12-05",["MOCK • Paper 2 full 100-mark / 60-minute simulation","REVIEW • Check every wrong answer","REVISE • Weakest Paper 2 topics"]],
+
+["2026-12-06",["MOCK • Paper 3 full 100-mark / 60-minute simulation","REVIEW • Check every wrong answer","REVISE • Weakest Paper 3 topics"]],
+["2026-12-07",["MOCK • Paper 4 full 100-mark / 60-minute simulation","REVIEW • Check every wrong answer","REVISE • Weakest Paper 4 topics"]],
+["2026-12-08",["FINAL REVISION • Paper 1: all four Law modules + Communication","PRACTICE • High-weight areas and marked mistakes","RECALL • Definitions, distinctions and remedies"]],
+["2026-12-09",["FINAL REVISION • Paper 2: all Accounting + Cost Accounting","PRACTICE • Key formats, adjustments and calculations","RECALL • Cost classifications and formulas"]],
+["2026-12-10",["FINAL REVISION • Paper 3: all Mathematics + Statistics","PRACTICE • Formula sheet + selected timed questions","RECALL • Methods, conditions and interpretations"]],
+["2026-12-11",["FINAL REVISION • Paper 4: Economics + Management","PRACTICE • High-weight concepts and weak areas","RECALL • Definitions, theories, diagrams and comparisons"]],
+["2026-12-12",["LIGHT FINAL REVIEW • All four papers: formula/definition/section notebook","REVIEW • Only previously marked mistakes and weak topics","EXAM PREP • No new topics; organise documents, timing and essentials"]]
+].map(([date,tasks])=>({date,tasks}));
+
 const KEY="cma_foundation_tracker_v1";
-let state=JSON.parse(localStorage.getItem(KEY)||"null")||{completed:{},days:{},notes:{revise:"",exam:""},sessions:0};
+let state=JSON.parse(localStorage.getItem(KEY)||"null")||{completed:{},days:{},tasks:{},notes:{revise:"",exam:""},sessions:0};
+state.tasks=state.tasks||{};state.days=state.days||{};state.completed=state.completed||{};state.notes=state.notes||{revise:"",exam:""};
 
 function save(){localStorage.setItem(KEY,JSON.stringify(state))}
 function pctColor(p){
@@ -239,33 +340,47 @@ function dateISO(d){return d.toISOString().slice(0,10)}
 function localDate(y,m,d){return new Date(y,m-1,d)}
 function renderDays(){
   const root=document.getElementById("dailySchedule");root.innerHTML="";
-  let d=localDate(2026,9,26),end=localDate(2026,12,12),n=0;
   const weeks=[];
-  while(d<=end){
-    const iso=dateISO(d);
+  PLAN.forEach((entry,n)=>{
+    const d=new Date(entry.date+"T12:00:00");
     const week=Math.floor(n/7);
-    if(!weeks[week]) weeks[week]={start:new Date(d),days:[]};
-    let focus;
-    if(d<=localDate(2026,10,25)) focus="Syllabus build";
-    else if(d<=localDate(2026,11,22)) focus="Finish + revise";
-    else focus="Exam mode";
-    if(d.getDay()===0) focus="Weekly reset + light revision";
-    weeks[week].days.push({date:new Date(d),iso,focus});
-    d.setDate(d.getDate()+1);n++;
-  }
+    if(!weeks[week]) weeks[week]={start:d,days:[]};
+    weeks[week].days.push({date:d,iso:entry.date,tasks:entry.tasks});
+  });
   const wrap=document.createElement("div");wrap.className="week-grid";
   weeks.forEach((w,i)=>{
     const details=document.createElement("details");details.className="week";
     if(i===0) details.open=true;
     const endDate=w.days[w.days.length-1].date;
+    const countDone=w.days.filter(x=>state.days[x.iso]).length;
     const title=`Week ${i+1} · ${w.start.toLocaleDateString(undefined,{day:"numeric",month:"short"})}–${endDate.toLocaleDateString(undefined,{day:"numeric",month:"short"})}`;
-    details.innerHTML=`<summary><span>${title}</span><span class="empty">${w.days.filter(x=>state.days[x.iso]).length}/${w.days.length} done</span></summary><div class="weekdays"></div>`;
+    details.innerHTML=`<summary><span>${title}</span><span class="empty">${countDone}/${w.days.length} days done</span></summary><div class="weekdays"></div>`;
     const days=details.querySelector(".weekdays");
     w.days.forEach(x=>{
       const done=!!state.days[x.iso];
-      const row=document.createElement("label");row.className="daybar";row.id="day-"+x.iso;
-      row.innerHTML=`<input type="checkbox" ${done?"checked":""}><div class="daytext"><b>${x.date.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})}</b><span>${x.focus}</span></div><span class="weight">${done?"DONE":"TODO"}</span>`;
-      row.querySelector("input").addEventListener("change",e=>{state.days[x.iso]=e.target.checked;save();renderAll()});
+      const taskDone=x.tasks.filter((_,ti)=>!!state.tasks[x.iso+"-"+ti]).length;
+      const row=document.createElement("div");row.className="day-wrap";row.id="day-"+x.iso;
+      row.innerHTML=`<label class="daybar"><input type="checkbox" ${done?"checked":""}><div class="daytext"><b>${x.date.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})}</b><span>${x.tasks.length} exact study tasks · ${taskDone}/${x.tasks.length} checked</span></div><span class="weight">${done?"DONE":"TODO"}</span></label><div class="day-content"><div class="tasklist"></div><div class="day-meta">Tick individual topics as you complete them, or tick the day box to mark the whole day complete.</div></div>`;
+      const dayCheck=row.querySelector(".daybar input");
+      dayCheck.addEventListener("change",e=>{
+        state.days[x.iso]=e.target.checked;
+        x.tasks.forEach((_,ti)=>state.tasks[x.iso+"-"+ti]=e.target.checked);
+        save();renderAll();
+      });
+      const list=row.querySelector(".tasklist");
+      x.tasks.forEach((task,ti)=>{
+        const key=x.iso+"-"+ti,tdone=!!state.tasks[key];
+        const t=document.createElement("label");t.className="task"+(tdone?" done":"");
+        const parts=task.split(" • ");
+        t.innerHTML=`<input type="checkbox" ${tdone?"checked":""}><span><span class="task-label">${parts[0]}</span>${parts.slice(1).join(" • ")}</span>`;
+        t.querySelector("input").addEventListener("change",e=>{
+          state.tasks[key]=e.target.checked;
+          const all=x.tasks.every((_,j)=>!!state.tasks[x.iso+"-"+j]);
+          state.days[x.iso]=all;
+          save();renderAll();
+        });
+        list.appendChild(t);
+      });
       days.appendChild(row);
     });
     wrap.appendChild(details);
@@ -278,8 +393,8 @@ function renderDashboard(){
   document.getElementById("overallPct").textContent=Math.round(op)+"%";
   document.getElementById("overallLabel").textContent=Math.round(op)+"%";
   const bar=document.getElementById("overallBar");bar.style.width=op+"%";bar.style.background=pctColor(op);
-  document.getElementById("doneCount").textContent=doneMods+"/22";
-  document.getElementById("daysDone").textContent=daysDone;
+  document.getElementById("doneCount").textContent=doneMods+"/"+DATA.reduce((a,p)=>a+p.modules.length,0);
+  document.getElementById("daysDone").textContent=daysDone+"/"+PLAN.length;
   const now=new Date(),exam=new Date("2026-12-13T00:00:00");
   document.getElementById("daysLeft").textContent=Math.max(0,Math.ceil((exam-now)/86400000));
 }
@@ -302,7 +417,7 @@ document.getElementById("examNotes").addEventListener("input",e=>{state.notes.ex
 document.getElementById("todayBtn").onclick=()=>{
  const iso=dateISO(new Date());const el=document.getElementById("day-"+iso);
  if(el)el.scrollIntoView({behavior:"smooth",block:"center"});
- else alert("Today is outside the 26 Sep–12 Dec preparation window.");
+ else alert("Today is outside the 27 Sep–12 Dec preparation window.");
 };
 
 // Timer
@@ -336,11 +451,11 @@ document.getElementById("importBtn").onclick=()=>document.getElementById("import
 document.getElementById("importFile").onchange=e=>{
  const file=e.target.files[0];if(!file)return;
  const reader=new FileReader();
- reader.onload=()=>{try{const incoming=JSON.parse(reader.result);if(!incoming.completed||!incoming.days)throw new Error();state=incoming;save();renderAll();document.getElementById("reviseNotes").value=state.notes?.revise||"";document.getElementById("examNotes").value=state.notes?.exam||"";alert("Progress imported successfully.")}catch(err){alert("That file does not look like a valid CMA tracker backup.")}};
+ reader.onload=()=>{try{const incoming=JSON.parse(reader.result);if(!incoming.completed||!incoming.days)throw new Error();state=incoming;state.tasks=state.tasks||{};state.days=state.days||{};state.completed=state.completed||{};state.notes=state.notes||{revise:"",exam:""};save();renderAll();document.getElementById("reviseNotes").value=state.notes?.revise||"";document.getElementById("examNotes").value=state.notes?.exam||"";alert("Progress imported successfully.")}catch(err){alert("That file does not look like a valid CMA tracker backup.")}};
  reader.readAsText(file);e.target.value="";
 };
 document.getElementById("resetBtn").onclick=()=>{
- if(confirm("Reset ALL module progress, study days, notes and sessions? This cannot be undone.")){state={completed:{},days:{},notes:{revise:"",exam:""},sessions:0};save();location.reload()}
+ if(confirm("Reset ALL module progress, study days, notes and sessions? This cannot be undone.")){state={completed:{},days:{},tasks:{},notes:{revise:"",exam:""},sessions:0};save();location.reload()}
 };
 </script>
 </body>
