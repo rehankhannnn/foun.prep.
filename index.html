@@ -162,9 +162,10 @@ textarea:focus{border-color:#b9b0ff;box-shadow:0 0 0 3px var(--accent-soft)}
       <button class="btn" id="timerSwitch">Break</button>
     </div>
     <div class="timer-settings" style="margin-top:14px">
-      <label>Focus <input id="focusMin" type="number" min="1" max="180" value="50"></label>
-      <label>Break <input id="breakMin" type="number" min="1" max="60" value="10"></label>
+      <label>Focus (minutes) <input id="focusMin" type="number" min="1" max="180" step="1" value="50" inputmode="numeric"></label>
+      <label>Break (minutes) <input id="breakMin" type="number" min="1" max="60" step="1" value="10" inputmode="numeric"></label>
     </div>
+    <div style="margin-top:8px;font-size:12px;color:var(--muted)">Type any duration in the boxes above, then press Enter or click Reset to apply it.</div>
     <div class="empty" style="margin-top:12px">A completed focus session is counted below.</div>
     <div style="margin-top:10px;font-weight:800">Focus sessions completed: <span id="sessions">0</span></div>
   </div>
@@ -212,84 +213,84 @@ const DATA = [
 
 // Granular day-by-day plan. Every syllabus subtopic is introduced here before the revision phase.
 const PLAN = [
-["2026-09-27",["P2 • Four accounting frameworks: conceptual, legal, institutional & regulatory","P3 • Mean: individual, discrete and continuous series","P1 • Introduction: Sources of Law"]],
-["2026-09-28",["P2 • Forms of organisation","P3 • Weighted mean and combined mean","P4 • Management: introduction and scope"]],
-["2026-09-29",["P2 • Accounting principles, concepts & conventions","P3 • Median: individual, discrete and continuous series","P1 • Introduction: Legislative Process and Court System in India"]],
-["2026-09-30",["P2 • Capital expenditure vs revenue expenditure","P3 • Mode and empirical relationship","P4 • Stewardship Theory"]],
-["2026-10-01",["P2 • Capital receipts vs revenue receipts","P3 • Mean deviation","P1 • Basic legal concepts and terminology"]],
-["2026-10-02",["P2 • Accounting cycle: overview and finalisation","P3 • Range, quartiles and quartile deviation","P4 • Agency Theory"]],
-["2026-10-03",["P2 • Charts of accounts & codification structure","P3 • Standard deviation","P1 • Essentials of a contract"]],
-["2026-10-04",["P2 • Analysis of transactions using accounting equation","P3 • Coefficient of variation","P4 • Planning and organizing"]],
-["2026-10-05",["P2 • Double-entry system: rules and applications","P3 • Karl Pearson coefficient of skewness","P1 • Offer: meaning, essentials and types"]],
-["2026-10-06",["P2 • Books of original entry and subsidiary books","P3 • Bowley coefficient of skewness","P4 • Staffing and leading"]],
-["2026-10-07",["P2 • Journal proper: opening, transfer, closing entries","P3 • Correlation: meaning and scatter diagram","P1 • Acceptance: rules, communication and revocation"]],
-["2026-10-08",["P2 • Journal proper: adjustment and rectification entries","P3 • Karl Pearson coefficient of correlation","P4 • Communication, coordination and collaboration"]],
-["2026-10-09",["P2 • Ledger: posting and balancing","P3 • Regression analysis: meaning and basics","P1 • Consideration: meaning, essentials and exceptions"]],
-["2026-10-10",["P2 • Cash book and bank book","P3 • Regression equations and interpretation","P4 • Monitoring and control"]],
-["2026-10-11",["P2 • Petty cash book","P3 • Probability: concepts and terminology","P1 • Capacity of parties: minor, sound mind and disqualified persons"]],
-["2026-10-12",["P2 • Bank Reconciliation Statement","P3 • Probability theorems: primary business applications","P4 • Structure, responsibility and accountability"]],
-["2026-10-13",["P2 • Trial balance: preparation and uses","P3 • Index numbers: uses and methods of construction","P1 • Free consent: coercion and undue influence"]],
-["2026-10-14",["P2 • Adjustment entries","P3 • Time series: components","P4 • Delegation"]],
-["2026-10-15",["P2 • Rectification of errors","P3 • Trend by moving average method","P1 • Free consent: fraud, misrepresentation and mistake"]],
-["2026-10-16",["P2 • Depreciation: Straight Line Method","P3 • Statistical diagrams: bar/column and other diagrams","P4 • Leadership: concepts and theories"]],
-["2026-10-17",["P2 • Depreciation: Diminishing Balance Method","P3 • Frequency distribution","P1 • Legality of object and consideration; void agreements"]],
-["2026-10-18",["P2 • Bad debts: accounting treatment","P3 • Histogram","P4 • Motivation: concepts and theories"]],
-["2026-10-19",["P2 • Provision for doubtful debts","P3 • Frequency polygon and frequency curve","P1 • Performance, discharge and contingent contracts"]],
-["2026-10-20",["P2 • Consignment: meaning, features and accounting","P3 • Ogive","P4 • Decision-making: types and process"]],
-["2026-10-21",["P2 • Consignment: valuation of stock, normal/abnormal loss","P3 • Pie chart","P1 • Quasi contracts; breach of contract and remedies"]],
-["2026-10-22",["P2 • Consignment: profit/loss and accounting entries","P3 • Set theory and Venn diagrams","P4 • Fundamentals of economics: scarcity, choice and basic concepts"]],
-["2026-10-23",["P2 • Joint Venture: meaning, features and accounting methods","P3 • Indices: basic concepts and laws","P1 • Special contracts: indemnity and guarantee"]],
-["2026-10-24",["P2 • Joint Venture: transactions and profit/loss","P3 • Logarithms: basic concepts and laws","P4 • Utility, wealth and production"]],
-["2026-10-25",["P2 • Bills of Exchange: terminology and basic entries","P3 • Permutation and combination: basic applications","P1 • Special contracts: bailment and pledge"]],
-["2026-10-26",["P2 • Bills of Exchange: dishonour, noting and renewal","P3 • Quadratic equations: basic methods","P4 • Demand: meaning, determinants and law of demand"]],
-["2026-10-27",["P2 • Sole proprietor final accounts: Income Statement structure","P3 • Ratios: basic concepts and simplification","P1 • Special contracts: agency"]],
-["2026-10-28",["P2 • Sole proprietor final accounts: Balance Sheet structure","P3 • Proportion and direct/inverse variation","P4 • Elasticities of demand: price, income and cross"]],
-["2026-10-29",["P2 • Final accounts: adjustments and treatment","P3 • Simple interest","P1 • E-contracts and e-signatures: essentials and requirements"]],
-["2026-10-30",["P2 • NPO: Receipts & Payments Account","P3 • Compound interest","P4 • Consumer behaviour and demand forecasting"]],
-["2026-10-31",["P2 • NPO: Income & Expenditure Account","P3 • Annuity and time value of money","P1 • Sale of Goods: definitions, contract of sale, sale vs agreement to sell"]],
-["2026-11-01",["P2 • NPO: Balance Sheet and adjustments","P3 • Arithmetic progression","P4 • Supply: meaning, determinants, law and elasticity"]],
-["2026-11-02",["P2 • Cost Accounting: meaning, definition and significance","P3 • Geometric progression","P1 • Sale of Goods: conditions and warranties, including implied conditions/warranties"]],
-["2026-11-03",["P2 • Relationship between Cost Accounting and Financial Accounting","P3 • Time and distance","P4 • Market equilibrium: equilibrium price and quantity"]],
-["2026-11-04",["P2 • Application of Cost Accounting for business decisions","P3 • Calculus: concept of derivative in business","P1 • Sale of Goods: transfer of ownership/title"]],
-["2026-11-05",["P2 • Cost, cost centre, cost unit and cost drivers","P3 • Revenue function","P4 • Production: meaning, factors, variable proportions and returns to scale"]],
-["2026-11-06",["P2 • Classification of costs under Cost Accounting Standard 1","P3 • Cost function","P1 • Sale of Goods: delivery, acceptance and performance"]],
-["2026-11-07",["P2 • Ascertainment of costs","P3 • Optimization: basic business applications","P4 • Costs: total, fixed, variable, average and marginal; means of production"]],
-["2026-11-08",["P2 • Statement of Cost and Profit / Cost Sheet","P3 • Business Mathematics mixed numerical practice","P1 • Unpaid seller: lien, stoppage in transit and resale"]],
-["2026-11-09",["P2 • Cost Accounting mixed numerical practice","P3 • Business Statistics mixed numerical practice","P4 • Perfect competition"]],
-["2026-11-10",["P2 • Accounting Fundamentals: timed mixed set + error-log correction","P3 • Central Tendency & Dispersion: timed mixed set + formula recall","P1 • Negotiable Instruments: characteristics; promissory note, bill of exchange and cheque — focused revision + MCQs"]],
-["2026-11-11",["P2 • Special Transactions: consignment/JV/Bills mixed practice","P3 • Correlation & Regression: timed mixed set + interpretation","P4 • Duopoly, oligopoly and monopoly — focused revision + MCQs"]],
-["2026-11-12",["P2 • Final Accounts: sole proprietor + NPO mixed practice","P3 • Probability: theorem/application practice","P1 • Negotiable Instruments: crossing and marking of cheques — focused revision + MCQs"]],
-["2026-11-13",["P2 • Cost Accounting: classification + cost sheet + decision problems","P3 • Index Numbers & Time Series: construction + moving average practice","P4 • Monopolistic competition and price discrimination — focused revision + MCQs"]],
-["2026-11-14",["P2 • Full-paper mixed accounting practice: weak chapters first","P3 • Arithmetic/Algebra/Calculus: timed numerical set","P1 • Negotiable Instruments: noting, protesting and dishonour of cheques — focused revision + MCQs"]],
-["2026-11-15",["P2 • Mock-style 60-minute accounting set + complete error review","P3 • Mock-style 60-minute maths/statistics set + complete error review","P4 • Money: types, features and functions — focused revision + MCQs"]],
-["2026-11-16",["P2 • Accounting Fundamentals: timed mixed set + error-log correction","P3 • Central Tendency & Dispersion: timed mixed set + formula recall","P1 • Business Communication: nature, scope, features and process — focused revision + MCQs"]],
-["2026-11-17",["P2 • Special Transactions: consignment/JV/Bills mixed practice","P3 • Correlation & Regression: timed mixed set + interpretation","P4 • Banking: definition, functions, utility and principles — focused revision + MCQs"]],
-["2026-11-18",["P2 • Final Accounts: sole proprietor + NPO mixed practice","P3 • Probability: theorem/application practice","P1 • Types and internal-based business communication; Do's and Don'ts — focused revision + MCQs"]],
-["2026-11-19",["P2 • Cost Accounting: classification + cost sheet + decision problems","P3 • Index Numbers & Time Series: construction + moving average practice","P4 • Commercial banks and central bank — focused revision + MCQs"]],
-["2026-11-20",["P2 • Full-paper mixed accounting practice: weak chapters first","P3 • Arithmetic/Algebra/Calculus: timed numerical set","P1 • Writing/drafting for business audiences; clarity, conciseness and tone — focused revision + MCQs"]],
-["2026-11-21",["P2 • Mock-style 60-minute accounting set + complete error review","P3 • Mock-style 60-minute maths/statistics set + complete error review","P4 • Credit control and money market — focused revision + MCQs"]],
-["2026-11-22",["P2 • Accounting Fundamentals: timed mixed set + error-log correction","P3 • Central Tendency & Dispersion: timed mixed set + formula recall","P1 • Intercultural/international communication and barriers — focused revision + MCQs"]],
-["2026-11-23",["P2 • Special Transactions: consignment/JV/Bills mixed practice","P3 • Correlation & Regression: timed mixed set + interpretation","P4 • PESTEL: all six components — focused revision + MCQs"]],
-["2026-11-24",["P2 • Final Accounts: sole proprietor + NPO mixed practice","P3 • Probability: theorem/application practice","P1 • Legal aspects; use of graphics and references in business communication — focused revision + MCQs"]],
-["2026-11-25",["P2 • Cost Accounting: classification + cost sheet + decision problems","P3 • Index Numbers & Time Series: construction + moving average practice","P4 • VUCAFI: Volatility, Uncertainty, Complexity, Ambiguity, Fear of Unknown, Unprecedentedness — focused revision + MCQs"]],
-["2026-11-26",["P2 • Full-paper mixed accounting practice: weak chapters first","P3 • Arithmetic/Algebra/Calculus: timed numerical set","P1 • Contract Act + high-weight law: active recall and case/MCQ practice"]],
-["2026-11-27",["P2 • Mock-style 60-minute accounting set + complete error review","P3 • Mock-style 60-minute maths/statistics set + complete error review","P4 • Basic Concepts + Forms of Market: diagrams, concepts and MCQs"]],
-["2026-11-28",["P2 • Accounting Fundamentals: timed mixed set + error-log correction","P3 • Central Tendency & Dispersion: timed mixed set + formula recall","P1 • Sale of Goods + Negotiable Instruments: distinctions and problem practice"]],
-["2026-11-29",["P2 • Special Transactions: consignment/JV/Bills mixed practice","P3 • Correlation & Regression: timed mixed set + interpretation","P4 • Money & Banking + Economic/Business Environment: recall + MCQs"]],
-["2026-11-30",["P2 • Final Accounts: sole proprietor + NPO mixed practice","P3 • Probability: theorem/application practice","P1 • Full Paper 1 mixed revision: marked mistakes + timed questions"]],
-["2026-12-01",["P2 • Cost Accounting: classification + cost sheet + decision problems","P3 • Index Numbers & Time Series: construction + moving average practice","P4 • Management: theories, functions, leadership, motivation and decisions"]],
-["2026-12-02",["P2 • Full-paper mixed accounting practice: weak chapters first","P3 • Arithmetic/Algebra/Calculus: timed numerical set","P1 • Contract Act + high-weight law: active recall and case/MCQ practice"]],
-["2026-12-03",["P2 • Mock-style 60-minute accounting set + complete error review","P3 • Mock-style 60-minute maths/statistics set + complete error review","P4 • Basic Concepts + Forms of Market: diagrams, concepts and MCQs"]],
-["2026-12-04",["P2 • Accounting Fundamentals: timed mixed set + error-log correction","P3 • Central Tendency & Dispersion: timed mixed set + formula recall","P1 • Sale of Goods + Negotiable Instruments: distinctions and problem practice"]],
-["2026-12-05",["P2 • Special Transactions: consignment/JV/Bills mixed practice","P3 • Correlation & Regression: timed mixed set + interpretation","P4 • Money & Banking + Economic/Business Environment: recall + MCQs"]],
-["2026-12-06",["P2 • Final Accounts: sole proprietor + NPO mixed practice","P3 • Probability: theorem/application practice","P1 • Full Paper 1 mixed revision: marked mistakes + timed questions"]],
-["2026-12-07",["P2 • Cost Accounting: classification + cost sheet + decision problems","P3 • Index Numbers & Time Series: construction + moving average practice","P4 • Management: theories, functions, leadership, motivation and decisions"]],
-["2026-12-08",["P2 • Full-paper mixed accounting practice: weak chapters first","P3 • Arithmetic/Algebra/Calculus: timed numerical set","P1 • Contract Act + high-weight law: active recall and case/MCQ practice"]],
-["2026-12-09",["P2 • Mock-style 60-minute accounting set + complete error review","P3 • Mock-style 60-minute maths/statistics set + complete error review","P4 • Basic Concepts + Forms of Market: diagrams, concepts and MCQs"]],
-["2026-12-10",["P2 • Accounting Fundamentals: timed mixed set + error-log correction","P3 • Central Tendency & Dispersion: timed mixed set + formula recall","P1 • Sale of Goods + Negotiable Instruments: distinctions and problem practice"]],
-["2026-12-11",["P2 • Special Transactions: consignment/JV/Bills mixed practice","P3 • Correlation & Regression: timed mixed set + interpretation","P4 • Money & Banking + Economic/Business Environment: recall + MCQs"]],
-["2026-12-12",["P2 • Final Accounts: sole proprietor + NPO mixed practice","P3 • Probability: theorem/application practice","P1 • Full Paper 1 mixed revision: marked mistakes + timed questions"]]
-].map(([date,tasks])=>({date,tasks}));
+["2026-09-27",["P2 • Four accounting frameworks: conceptual, legal, institutional & regulatory", "P3 • Algebra: set theory and Venn diagrams", "P1 • Indian Contract Act: essentials of a contract"]],
+["2026-09-28",["P2 • Forms of organisation", "P3 • Algebra: indices — basic concepts and laws", "P4 • Forms of Market: perfect competition — features, price/output basics"]],
+["2026-09-29",["P2 • Accounting principles, concepts & conventions", "P3 • Algebra: basic permutation and combination", "P1 • Indian Contract Act: offer — meaning, essentials and types"]],
+["2026-09-30",["P2 • Capital expenditure vs revenue expenditure; capital vs revenue receipts", "P3 • Algebra: quadratic equations — basic methods", "P4 • Forms of Market: duopoly and oligopoly"]],
+["2026-10-01",["P2 • Accounting cycle: charts of accounts, codification structure and transaction analysis", "P3 • Algebra mixed practice: sets, indices, logarithms, P&C and quadratics", "P1 • Indian Contract Act: acceptance — rules, communication and revocation"]],
+["2026-10-02",["P2 • Accounting equation and double-entry system", "P3 • Algebra: timed practice + weak-area correction", "P4 • Forms of Market: monopoly and monopolistic competition"]],
+["2026-10-03",["P2 • Books of original entry and subsidiary books", "P3 • Algebra: module revision + mixed numerical set", "P1 • Indian Contract Act: consideration — meaning, essentials and exceptions"]],
+["2026-10-04",["P2 • Journal proper: opening, transfer and closing entries", "P3 • Arithmetic: ratios — basic concepts and simplification", "P4 • Forms of Market: price discrimination"]],
+["2026-10-05",["P2 • Journal proper: adjustment and rectification entries; Ledger posting and balancing", "P3 • Arithmetic: proportion and direct/inverse variation", "P1 • Indian Contract Act: capacity of parties — minor, sound mind and disqualified persons"]],
+["2026-10-06",["P2 • Cash book and bank book", "P3 • Arithmetic: simple interest", "P4 • Money: types, features and functions"]],
+["2026-10-07",["P2 • Petty cash book and Bank Reconciliation Statement", "P3 • Arithmetic: compound interest", "P1 • Indian Contract Act: free consent — coercion and undue influence"]],
+["2026-10-08",["P2 • Trial balance: preparation and uses", "P3 • Arithmetic: time value of money and annuity", "P4 • Banking: definition, functions, utility and principles"]],
+["2026-10-09",["P2 • Adjustment entries and rectification of errors", "P3 • Arithmetic: arithmetic progression and geometric progression", "P1 • Indian Contract Act: free consent — fraud, misrepresentation and mistake"]],
+["2026-10-10",["P2 • Depreciation: Straight Line Method and Diminishing Balance Method", "P3 • Arithmetic: time and distance", "P4 • Commercial banks and central bank; credit control"]],
+["2026-10-11",["P2 • Bad debts and provision for doubtful debts", "P3 • Measures: weighted mean and combined mean", "P1 • Indian Contract Act: legality of object/consideration and void agreements"]],
+["2026-10-12",["P2 • Cost Accounting: meaning, definition, significance and relationship with Financial Accounting", "P3 • Measures: median — individual, discrete and continuous series", "P4 • Money market; Money & Banking mixed revision and MCQs"]],
+["2026-10-13",["P2 • Cost Accounting: application for business decisions", "P3 • Measures: mode and empirical relationship", "P1 • Indian Contract Act: performance, discharge and contingent contracts"]],
+["2026-10-14",["P2 • Cost, cost centre, cost unit and cost drivers", "P3 • Measures: mean deviation; range, quartiles and quartile deviation", "P4 • Management: introduction and scope; Stewardship Theory and Agency Theory"]],
+["2026-10-15",["P2 • Classification of costs under Cost Accounting Standard 1", "P3 • Measures: standard deviation and coefficient of variation", "P1 • Indian Contract Act: quasi contracts; breach and remedies"]],
+["2026-10-16",["P2 • Ascertainment of costs and Statement of Cost / Cost Sheet", "P3 • Measures: Karl Pearson and Bowley coefficients of skewness", "P4 • Management functions: planning, organizing, staffing and leading"]],
+["2026-10-17",["P2 • Cost Sheet: profit calculation and cost-to-profit reconciliation practice", "P3 • Measures of Central Tendency & Dispersion mixed numerical practice", "P1 • Special contracts: indemnity, guarantee, bailment and pledge"]],
+["2026-10-18",["P2 • Cost Accounting mixed numerical practice: classification, cost drivers and cost sheet", "P3 • Correlation: meaning and scatter diagram", "P4 • Communication, coordination and collaboration; monitoring and control"]],
+["2026-10-19",["P2 • Sole proprietor final accounts: Income Statement", "P3 • Karl Pearson coefficient of correlation", "P1 • Special contracts: agency; e-contracts and e-signatures — essentials and requirements"]],
+["2026-10-20",["P2 • Sole proprietor final accounts: Balance Sheet", "P3 • Regression analysis: meaning, regression equations and interpretation", "P4 • Structure, responsibility, accountability and delegation"]],
+["2026-10-21",["P2 • Sole proprietor final accounts: adjustments and complete preparation", "P3 • Correlation & Regression mixed numerical practice", "P1 • Sale of Goods: definitions, contract of sale, sale vs agreement to sell"]],
+["2026-10-22",["P2 • NPO: Receipts & Payments Account", "P3 • Probability: concepts and terminology", "P4 • Leadership: concepts and theories"]],
+["2026-10-23",["P2 • NPO: Income & Expenditure Account", "P3 • Probability theorems: primary business applications", "P1 • Sale of Goods: conditions and warranties, including implied conditions/warranties"]],
+["2026-10-24",["P2 • NPO: Balance Sheet and adjustments", "P3 • Probability mixed numerical practice", "P4 • Motivation: concepts and theories"]],
+["2026-10-25",["P2 • Final Accounts mixed practice: sole proprietor + NPO", "P3 • Index Numbers: uses and methods of construction", "P1 • Sale of Goods: transfer of ownership/title"]],
+["2026-10-26",["P2 • Consignment: meaning, features and accounting treatment", "P3 • Time Series: components", "P4 • Decision-making: types and process"]],
+["2026-10-27",["P2 • Consignment: valuation of stock and normal/abnormal loss", "P3 • Trend by moving average method", "P1 • Sale of Goods: delivery, acceptance and performance"]],
+["2026-10-28",["P2 • Consignment: profit/loss and accounting entries", "P3 • Index Numbers & Time Series mixed practice", "P4 • Basic Concepts: fundamentals of economics; utility, wealth and production"]],
+["2026-10-29",["P2 • Joint Venture: meaning, features and accounting methods", "P3 • Statistical Representation: diagrams", "P1 • Sale of Goods: unpaid seller — lien, stoppage in transit and resale"]],
+["2026-10-30",["P2 • Joint Venture: transactions and profit/loss", "P3 • Frequency distribution; histogram", "P4 • Demand: meaning, determinants, law, price/income/cross elasticity and consumer behaviour"]],
+["2026-10-31",["P2 • Bills of Exchange: terminology and basic entries", "P3 • Frequency polygon, frequency curve, ogive and pie chart", "P1 • Negotiable Instruments: characteristics; promissory note, bill of exchange and cheque"]],
+["2026-11-01",["P2 • Bills of Exchange: dishonour, noting and renewal (excluding accommodation bill/insolvency)", "P3 • Calculus: concept of derivative and business application", "P4 • Demand forecasting; Supply: meaning, determinants, law and elasticity"]],
+["2026-11-02",["P2 • Special Transactions mixed numerical practice: Consignment + Joint Venture + Bills", "P3 • Revenue function, cost function and basic optimization", "P1 • Negotiable Instruments: crossing, marking, noting/protesting and dishonour of cheques"]],
+["2026-11-03",["P2 • Accounting Fundamentals timed mixed set + error-log correction", "P3 • Algebra + Arithmetic timed numerical set", "P4 • Equilibrium; Production: factors, variable proportions and returns to scale"]],
+["2026-11-04",["P2 • Cost Accounting timed mixed set + error-log correction", "P3 • Statistics timed mixed set: Measures + Correlation/Regression", "P1 • Business Communication: nature/scope, effective features, process, types and internal communication; Do’s/Don’ts"]],
+["2026-11-05",["P2 • Final Accounts timed mixed set + error-log correction", "P3 • Probability + Index Numbers/Time Series timed set", "P4 • Costs: short/long run, total/fixed/variable/average/marginal; means of production"]],
+["2026-11-06",["P2 • Full Paper 2 numerical set: identify weak chapters", "P3 • Full Paper 3 60-minute mock + complete error review", "P1 • Business Communication: business drafting, intercultural/international communication and barriers; legal aspects"]],
+["2026-11-07",["P2 • Full Paper 2 60-minute mock + complete error review", "P3 • Full Paper 3 final revision: high-weight weak areas + formulas", "P4 • Economic & Business Environment: PESTEL and VUCAFI — all components"]],
+["2026-11-08",["P2 • Full Paper 2 final revision: high-weight weak areas + formulas/procedures", "P3 • Statistical Representation + Calculus quick revision and mixed practice", "P1 • Business Communication: use of graphics and references; Introduction: Sources of Law, Legislative Process/Court System and basic legal concepts/terminology"]],
+["2026-11-09",["P2 • Accounting Fundamentals: full mixed practice + error log", "P3 • Algebra + Arithmetic mixed numerical practice", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-11-10",["P2 • Cost Accounting: cost sheet + classification + decision problems", "P3 • Measures of Central Tendency & Dispersion mixed practice", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-11-11",["P2 • Final Accounts: sole proprietor + NPO complete practice", "P3 • Correlation & Regression mixed practice", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-11-12",["P2 • Special Transactions: Consignment + Joint Venture + Bills practice", "P3 • Probability + Index Numbers/Time Series practice", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-11-13",["P2 • Full Paper 2 timed mock + detailed error review", "P3 • Full Paper 3 timed mock + detailed error review", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-11-14",["P2 • High-weight Accounting Fundamentals revision + MCQs", "P3 • Algebra + Arithmetic weak-topic correction", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-11-15",["P2 • High-weight Cost Accounting revision + numericals", "P3 • Measures + skewness/dispersion weak-topic correction", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-11-16",["P2 • High-weight Final Accounts revision + adjustments", "P3 • Correlation/Regression + Probability weak-topic correction", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-11-17",["P2 • Full Paper 2 timed mock + detailed error review", "P3 • Full Paper 3 timed mock + detailed error review", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-11-18",["P2 • Weak-topic correction from error log + mixed numericals", "P3 • Statistics mixed numerical set + formula recall", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-11-19",["P2 • Final Paper 2 formula/procedure recall + selected numericals", "P3 • Calculus + Index Numbers/Time Series final revision", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-11-20",["P2 • Full Paper 2 final mock + error review", "P3 • Full Paper 3 final mock + error review", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-11-21",["P2 • Accounting Fundamentals: full mixed practice + error log", "P3 • Algebra + Arithmetic mixed numerical practice", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-11-22",["P2 • Cost Accounting: cost sheet + classification + decision problems", "P3 • Measures of Central Tendency & Dispersion mixed practice", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-11-23",["P2 • Final Accounts: sole proprietor + NPO complete practice", "P3 • Correlation & Regression mixed practice", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-11-24",["P2 • Special Transactions: Consignment + Joint Venture + Bills practice", "P3 • Probability + Index Numbers/Time Series practice", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-11-25",["P2 • Full Paper 2 timed mock + detailed error review", "P3 • Full Paper 3 timed mock + detailed error review", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-11-26",["P2 • High-weight Accounting Fundamentals revision + MCQs", "P3 • Algebra + Arithmetic weak-topic correction", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-11-27",["P2 • High-weight Cost Accounting revision + numericals", "P3 • Measures + skewness/dispersion weak-topic correction", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-11-28",["P2 • High-weight Final Accounts revision + adjustments", "P3 • Correlation/Regression + Probability weak-topic correction", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-11-29",["P2 • Full Paper 2 timed mock + detailed error review", "P3 • Full Paper 3 timed mock + detailed error review", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-11-30",["P2 • Weak-topic correction from error log + mixed numericals", "P3 • Statistics mixed numerical set + formula recall", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-12-01",["P2 • Final Paper 2 formula/procedure recall + selected numericals", "P3 • Calculus + Index Numbers/Time Series final revision", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-12-02",["P2 • Full Paper 2 final mock + error review", "P3 • Full Paper 3 final mock + error review", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-12-03",["P2 • Accounting Fundamentals: full mixed practice + error log", "P3 • Algebra + Arithmetic mixed numerical practice", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-12-04",["P2 • Cost Accounting: cost sheet + classification + decision problems", "P3 • Measures of Central Tendency & Dispersion mixed practice", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-12-05",["P2 • Final Accounts: sole proprietor + NPO complete practice", "P3 • Correlation & Regression mixed practice", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-12-06",["P2 • Special Transactions: Consignment + Joint Venture + Bills practice", "P3 • Probability + Index Numbers/Time Series practice", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-12-07",["P2 • Full Paper 2 timed mock + detailed error review", "P3 • Full Paper 3 timed mock + detailed error review", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-12-08",["P2 • High-weight Accounting Fundamentals revision + MCQs", "P3 • Algebra + Arithmetic weak-topic correction", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-12-09",["P2 • High-weight Cost Accounting revision + numericals", "P3 • Measures + skewness/dispersion weak-topic correction", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-12-10",["P2 • High-weight Final Accounts revision + adjustments", "P3 • Correlation/Regression + Probability weak-topic correction", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]],
+["2026-12-11",["P2 • Full Paper 2 timed mock + detailed error review", "P3 • Full Paper 3 timed mock + detailed error review", "P4 • Economics + Management high-weight revision and timed MCQs"]],
+["2026-12-12",["P2 • Weak-topic correction from error log + mixed numericals", "P3 • Statistics mixed numerical set + formula recall", "P1 • High-weight Contract + Sale of Goods + Negotiable Instruments revision and timed MCQs"]]
+]
 
 const KEY="cma_foundation_tracker_v1";
 let state=JSON.parse(localStorage.getItem(KEY)||"null")||{completed:{},days:{},tasks:{},notes:{revise:"",exam:""},sessions:0};
@@ -332,10 +333,10 @@ function renderDays(){
   const root=document.getElementById("dailySchedule");root.innerHTML="";
   const weeks=[];
   PLAN.forEach((entry,n)=>{
-    const d=new Date(entry.date+"T12:00:00");
+    const d=new Date(entry[0]+"T12:00:00");
     const week=Math.floor(n/7);
     if(!weeks[week]) weeks[week]={start:d,days:[]};
-    weeks[week].days.push({date:d,iso:entry.date,tasks:entry.tasks});
+    weeks[week].days.push({date:d,iso:entry[0],tasks:entry[1]});
   });
   const wrap=document.createElement("div");wrap.className="week-grid";
   weeks.forEach((w,i)=>{
@@ -428,8 +429,22 @@ document.getElementById("timerStart").onclick=()=>{
 document.getElementById("timerPause").onclick=()=>{running=false;clearInterval(interval);interval=null};
 document.getElementById("timerReset").onclick=()=>{running=false;clearInterval(interval);interval=null;syncTimerFromInputs()};
 document.getElementById("timerSwitch").onclick=()=>{running=false;clearInterval(interval);interval=null;setMode(mode==="Focus"?"Break":"Focus")};
-document.getElementById("focusMin").onchange=()=>{if(!running&&mode==="Focus")syncTimerFromInputs()};
-document.getElementById("breakMin").onchange=()=>{if(!running&&mode==="Break")syncTimerFromInputs()};
+const focusInput=document.getElementById("focusMin");
+const breakInput=document.getElementById("breakMin");
+function applyTimerInput(which){
+  const el=which==="Focus"?focusInput:breakInput;
+  let value=Number(el.value);
+  const min=Number(el.min)||1, max=Number(el.max)||180;
+  if(!Number.isFinite(value)) value=min;
+  value=Math.min(max,Math.max(min,Math.floor(value)));
+  el.value=value;
+  if(!running&&mode===which) syncTimerFromInputs();
+}
+focusInput.addEventListener("input",()=>applyTimerInput("Focus"));
+breakInput.addEventListener("input",()=>applyTimerInput("Break"));
+focusInput.addEventListener("change",()=>applyTimerInput("Focus"));
+breakInput.addEventListener("change",()=>applyTimerInput("Break"));
+[focusInput,breakInput].forEach(el=>el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();applyTimerInput(el===focusInput?"Focus":"Break");el.blur()}}));
 showTimer();
 
 // Backup
